@@ -1,6 +1,7 @@
 package com.luv2code.springboot.cruddemo.rest;
 
 import com.luv2code.springboot.cruddemo.entity.Employee;
+import com.luv2code.springboot.cruddemo.rest.exception.EmployeeNotFoundException;
 import com.luv2code.springboot.cruddemo.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,7 @@ public class EmployeeController {
 
         Employee employee = employeeService.findByID(id);
         if (employee == null)
-            throw new RuntimeException("employee not found");
+            throw new EmployeeNotFoundException("employee not found");
         return employee;
     }
 
@@ -47,7 +48,7 @@ public class EmployeeController {
     public String remove(@PathVariable int id) {
         Employee employee = employeeService.findByID(id);
         if (employee == null)
-            throw new RuntimeException("employee not found");
+            throw new EmployeeNotFoundException("employee not found");
         employeeService.deleteById(id);
         return "Deleted employee id "+ id;
     }
