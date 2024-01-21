@@ -42,10 +42,14 @@ public class EmployeeController {
     public Employee update(@RequestBody Employee employee) {
         return employeeService.save(employee);
     }
+
     @DeleteMapping("/employees/{id}")
-    public String remove(@PathVariable int id){
+    public String remove(@PathVariable int id) {
+        Employee employee = employeeService.findByID(id);
+        if (employee == null)
+            throw new RuntimeException("employee not found");
         employeeService.deleteById(id);
-        return "success";
+        return "Deleted employee id "+ id;
     }
 
 }
