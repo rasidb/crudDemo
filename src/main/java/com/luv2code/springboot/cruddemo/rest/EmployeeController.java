@@ -4,6 +4,7 @@ import com.luv2code.springboot.cruddemo.entity.Employee;
 import com.luv2code.springboot.cruddemo.rest.exception.EmployeeNotFoundException;
 import com.luv2code.springboot.cruddemo.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/employees/{id}")
-    public Employee getEmployeeById(@PathVariable int id) {
+    public Employee getEmployeeById(@PathVariable String id) {
 
         Employee employee = employeeService.findByID(id);
         if (employee == null)
@@ -40,17 +41,13 @@ public class EmployeeController {
     }
 
     @PutMapping("/employees")
-    public Employee update(@RequestBody Employee employee) {
+    public ResponseEntity<Employee> update(@RequestBody Employee employee) {
         return employeeService.save(employee);
     }
 
     @DeleteMapping("/employees/{id}")
-    public String remove(@PathVariable int id) {
-        Employee employee = employeeService.findByID(id);
-        if (employee == null)
-            throw new EmployeeNotFoundException("employee not found");
-        employeeService.deleteById(id);
-        return "Deleted employee id "+ id;
+    public ResponseEntity<Void> remove(@PathVariable String id) {
+        return employeeService.deleteById(id);
     }
 
 }

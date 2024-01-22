@@ -2,8 +2,12 @@ package com.luv2code.springboot.cruddemo.dao.impl;
 
 import com.luv2code.springboot.cruddemo.dao.EmployeeDAO;
 import com.luv2code.springboot.cruddemo.entity.Employee;
+import com.luv2code.springboot.cruddemo.rest.exception.EmployeeBadRequestException;
+import com.luv2code.springboot.cruddemo.rest.exception.EmployeeNotFoundException;
 import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,33 +18,42 @@ import java.util.List;
 public class EmployeeDAOImpl implements EmployeeDAO {
     //Create an EntityManager object
     private EntityManager entityManager;
+
     @Autowired
-    public EmployeeDAOImpl(EntityManager entityManager){
-        this.entityManager=entityManager;
+    public EmployeeDAOImpl(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
 
 
     @Override
     public List<Employee> findAll() {
-        return  entityManager.createQuery("from Employee",Employee.class).getResultList();
+        return entityManager.createQuery("from Employee", Employee.class).getResultList();
     }
 
     @Override
     public Employee findByID(int id) {
-        return entityManager.find(Employee.class,id);
+        Employee employee = entityManager.find(Employee.class, id);
+        if (employee == null)
+            throw new EmployeeNotFoundException("employee not found: " + id);
+
+        return entityManager.find(Employee.class, id);
     }
 
     @Override
     //@Transactional service kısmında
-    public Employee save(Employee employee) {
+    public ResponseEntity<Employee> save(Employee employee) {
+        if (employee.getFirstName() == null || employee.getEmail() == null || employee.getLastName() == null)
+            throw new EmployeeBadRequestException("hatalı body: ");
         entityManager.merge(employee); //if id==0 save, if id!=0 update
-        return employee;
+        return new ResponseEntity<>(employee, HttpStatus.CREATED);
     }
 
     @Override
     //@Transactional service kısmında
     public void deleteById(int id) {
         Employee employee = entityManager.find(Employee.class, id);
+        if (employee == null)
+            throw new EmployeeNotFoundException("student nor found" + id);
         entityManager.remove(employee);
     }
 
