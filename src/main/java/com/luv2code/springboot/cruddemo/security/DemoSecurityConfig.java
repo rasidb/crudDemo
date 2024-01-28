@@ -1,34 +1,25 @@
 package com.luv2code.springboot.cruddemo.security;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-
-import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
-import org.springframework.security.provisioning.UserDetailsManager;
-import org.springframework.security.web.SecurityFilterChain;
 
 import javax.sql.DataSource;
 
-@Configuration
+//@Configuration
 public class DemoSecurityConfig {
-    String baseURI = "/api/employees";
+    /*
+   String baseURI = "/api/employees";
     String employee = "EMPLOYEE";
     String manager = "MANAGER";
     String admin = "ADMIN";
 
     //add support for jdbc
 
-    /**
+
      *
      * @param dataSource
      * @return username ve authları ayarlamadan return new JdbcUserDetailsManager(dataSource); komudunu kullanmak default olarak şimdiki db tablosunu veriyor
      * ileride tabloyu değiştirdiğinde methodun içinde yazanları kullan
-     */
-    @Bean
+
+  //  @Bean
     public UserDetailsManager userDetailsManager(DataSource dataSource){
         JdbcUserDetailsManager jdbcUserDetailsManager =new JdbcUserDetailsManager(dataSource);
         jdbcUserDetailsManager.setUsersByUsernameQuery("select username, password, enabled from users where username=?");
@@ -55,8 +46,9 @@ public class DemoSecurityConfig {
 
         return http.build();
     }
-
-    /*
+    */
+}
+  /*
 
     @Bean
     public InMemoryUserDetailsManager userDetailsManager() {
@@ -80,4 +72,3 @@ public class DemoSecurityConfig {
         return new InMemoryUserDetailsManager(employee,admin,manager);
     }
      */
-}
