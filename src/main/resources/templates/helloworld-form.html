@@ -2,12 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="TR">
 <head>
     <meta charset="UTF-8">
-    <title>Hello World input html</title>
+    <title> hello world form</title>
 </head>
 <body>
-<form th:action="@{/processForm}" method="GET">
-    <input type="text" name="studentName" placeholder="What's your name" />
-    <input type="submit" value="Submit">
+<form th:action="@{/processForm2}" method="GET">
+    <input type="text" name="studentName" placeholder="what's your name">
+    <input type="submit" value="submit">
 </form>
- </body>
+<form th:action="@{/processForm}" method="GET">
+    <input type="text" name="studentName" placeholder="inputText">
+    <input type="submit" value="submit">
+</form>
+</body>
 </html>
