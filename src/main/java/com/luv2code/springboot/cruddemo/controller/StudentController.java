@@ -16,15 +16,21 @@ public class StudentController {
     @Value("${countries}")
     private List<String> countries;
 
+    @Value("${languages}")
+    private List<String> languages;
+    @Value("${operatingSystems}")
+    private List<String> operatingSystems;
+
 
     @GetMapping("/showStudent")
     public String showStudent(Model model) {
-        System.out.println(countries.size());
         //create a student object
         Student student = new Student();
         //add the object to model
         model.addAttribute("student", student);
         model.addAttribute("countries",countries);
+        model.addAttribute("languages",languages);
+        model.addAttribute("operatingSystems",operatingSystems);
         return "student-form";
     }
 
@@ -33,6 +39,8 @@ public class StudentController {
         model.addAttribute("isim", student.getFirstName());
         model.addAttribute("soyisim", student.getLastName());
         model.addAttribute("country", student.getCountry());
+        model.addAttribute("language",student.getLanguage());
+       model.addAttribute("operatingSystem",student.getOperatingSystem());
         return "student";
     }
 

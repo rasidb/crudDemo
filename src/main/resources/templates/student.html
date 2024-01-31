@@ -11,5 +11,12 @@ name : <span th:text="${isim}"></span>
 lastName: <span th:text ="${soyisim}"></span>
 <br>
 country: <span th:text="${country}"></span>
+<br>
+favorite programming language : <span th:text="${language}"></span>
+<br>
+favorite operating system:
+<ul>
+  <li th:each="each : ${student.operatingSystem}" th:text="${each}"></li>
+</ul>
 </body>
 </html>

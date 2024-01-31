@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,19 +7,37 @@
 </head>
 <body>
 <h3>Student registration form</h3>
-
+<br>
 <form
         th:action="@{/processStudentForm}" th:object="${student}" method="POST">
     First name: <input type="text" th:field="*{firstName}"/>
     <br><br>
     Last Name: <input type="text" name="lastName" th:field="*{lastName}"/>
     <br><br>
-    <select name="country" th:field="*{country}">
+    <select name="country"
+            th:field="*{country}">
         <option th:each="tempCountry : ${countries}" th:value="${tempCountry}" th:text="${tempCountry}"></option>
     </select>
     <br>
     <br>
+    Favorite Programming Language
+    <input type="radio"
+           th:field="*{language}"
+           th:each="language : ${languages}"
+           th:value="${language}"
+           th:text="${language}"/>
+    <br>
+    Favorite operating System
+    <input type="checkbox" th:field="*{operatingSystem}"
+                            th:each ="each : ${operatingSystems}"
+                            th:value="${each}"
+                            th:text="${each}"
+        />
+    <br>
+    <br>
     <input type="submit" name="submit" value="submit">
 </form>
+
+
 </body>
 </html>
