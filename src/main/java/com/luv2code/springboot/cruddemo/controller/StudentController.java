@@ -1,9 +1,12 @@
 package com.luv2code.springboot.cruddemo.controller;
 
 import com.luv2code.springboot.cruddemo.model.Student;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,27 +27,33 @@ public class StudentController {
 
     @GetMapping("/showStudent")
     public String showStudent(Model model) {
-        //create a student object
-        Student student = new Student();
         //add the object to model
-        model.addAttribute("student", student);
-        model.addAttribute("countries",countries);
-        model.addAttribute("languages",languages);
-        model.addAttribute("operatingSystems",operatingSystems);
+        model.addAttribute("student", new Student());
+        model.addAttribute("countries", countries);
+        model.addAttribute("languages", languages);
+        model.addAttribute("operatingSystems", operatingSystems);
         return "student-form";
     }
 
-    @PostMapping("/processStudentForm")
-    public String studentForm(@ModelAttribute("student") Student student, Model model) {
-        model.addAttribute("isim", student.getFirstName());
-        model.addAttribute("soyisim", student.getLastName());
-        model.addAttribute("country", student.getCountry());
-        model.addAttribute("language",student.getLanguage());
-       model.addAttribute("operatingSystem",student.getOperatingSystem());
-        return "student";
-    }
+    /**
+     * @param bindingResult önce bu classtan objeyi ekle sonra modeli ekle yoksa bindingResult hatayı görmüyor
+     * @param model
+     * @return
+     */
+   @PostMapping("/processStudentForm")
+   public String studentForm(@Valid @ModelAttribute("student") Student student, BindingResult bindingResult, Model model) {
+       if (bindingResult.hasErrors()) {
+           return "student-form";
+       }
 
+       model.addAttribute("isim", student.getFirstName());
+       model.addAttribute("soyisim", student.getLastName());
+       model.addAttribute("country", student.getCountry());
+       model.addAttribute("language", student.getLanguage());
+       model.addAttribute("operatingSystem", student.getOperatingSystem());
 
+       return "student";
+   }
 
 
 
@@ -53,23 +62,12 @@ public class StudentController {
 
 
     @PostMapping("/showStudent")
-    public String show(Model model){
-        Student student =new Student();
-        model.addAttribute("student",student);
-        model.addAttribute("country",countries);
+    public String show(Model model) {
+        Student student = new Student();
+        model.addAttribute("student", student);
+        model.addAttribute("country", countries);
         return "student-form";
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

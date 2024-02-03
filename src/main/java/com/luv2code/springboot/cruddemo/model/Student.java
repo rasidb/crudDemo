@@ -1,13 +1,22 @@
 package com.luv2code.springboot.cruddemo.model;
 
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 import java.util.List;
 
 public class Student {
     private String firstName;
-    private String lastName;
+
+    @NotNull(message = "is required")
+    @Size(min = 1, message = "is required")
+    private String lastName="";
+
     private String country;
+
     private String language;
+
     private List<String> operatingSystem;
 
     public Student() {

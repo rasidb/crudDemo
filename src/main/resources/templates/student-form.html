@@ -4,15 +4,21 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>student form</title>
+    <style>
+.error{color:red}
+    </style>
 </head>
 <body>
 <h3>Student registration form</h3>
 <br>
 <form
         th:action="@{/processStudentForm}" th:object="${student}" method="POST">
-    First name: <input type="text" th:field="*{firstName}"/>
+    <p>First name: <input type="text" th:field="*{firstName}"/></p>
     <br><br>
-    Last Name: <input type="text" name="lastName" th:field="*{lastName}"/>
+        <p>Last name (*):
+            <input type="text" th:field="*{lastName}" />
+            <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="error"></span>
+        </p><br>
     <br><br>
     <select name="country"
             th:field="*{country}">
@@ -20,19 +26,20 @@
     </select>
     <br>
     <br>
-    Favorite Programming Language
-    <input type="radio"
-           th:field="*{language}"
-           th:each="language : ${languages}"
-           th:value="${language}"
-           th:text="${language}"/>
+    <p>Favorite Programming Language</p>
+    <input
+            type="radio"
+            th:field="*{language}"
+            th:each="language : ${languages}"
+            th:value="${language}"
+            th:text="${language}"/>
     <br>
-    Favorite operating System
+    <p>Favorite operating System</p>
     <input type="checkbox" th:field="*{operatingSystem}"
-                            th:each ="each : ${operatingSystems}"
-                            th:value="${each}"
-                            th:text="${each}"
-        />
+           th:each="each : ${operatingSystems}"
+           th:value="${each}"
+           th:text="${each}"
+    />
     <br>
     <br>
     <input type="submit" name="submit" value="submit">
