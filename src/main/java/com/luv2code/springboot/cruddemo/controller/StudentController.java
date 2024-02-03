@@ -3,11 +3,13 @@ package com.luv2code.springboot.cruddemo.controller;
 import com.luv2code.springboot.cruddemo.model.Student;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.Banner;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -15,6 +17,13 @@ import java.util.List;
 
 @Controller
 public class StudentController {
+
+    @InitBinder //formdan gelen verileri temizlemek ya da özel dönüşümler için kullanılır
+    public void initBinder(WebDataBinder webDataBinder){
+        StringTrimmerEditor stringTrimmerEditor =new StringTrimmerEditor(true);
+        webDataBinder.registerCustomEditor(String.class,stringTrimmerEditor); //stringTrimmerEditor sayesinde inputta bulunan boşlukları siliyoruz
+    }
+
 
     @Value("${countries}")
     private List<String> countries;
@@ -45,9 +54,9 @@ public class StudentController {
        if (bindingResult.hasErrors()) {
            return "student-form";
        }
-
        model.addAttribute("isim", student.getFirstName());
        model.addAttribute("soyisim", student.getLastName());
+       model.addAttribute("yaş",student.getAge());
        model.addAttribute("country", student.getCountry());
        model.addAttribute("language", student.getLanguage());
        model.addAttribute("operatingSystem", student.getOperatingSystem());

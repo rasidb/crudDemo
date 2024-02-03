@@ -1,12 +1,20 @@
 package com.luv2code.springboot.cruddemo.model;
 
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.util.List;
 
 public class Student {
+    @Min(value = 1,message = "en düşük 1 olmalı")
+    @Max(value = 30,message = "en yüksek 30 olmalı")
+    private int age;
+
+    @NotNull(message = "is required")
+    @Size(min = 1,message = "is required")
     private String firstName;
 
     @NotNull(message = "is required")
@@ -20,6 +28,14 @@ public class Student {
     private List<String> operatingSystem;
 
     public Student() {
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public List<String> getOperatingSystem() {

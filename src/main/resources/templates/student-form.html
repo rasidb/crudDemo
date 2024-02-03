@@ -13,13 +13,21 @@
 <br>
 <form
         th:action="@{/processStudentForm}" th:object="${student}" method="POST">
-    <p>First name: <input type="text" th:field="*{firstName}"/></p>
+    <p>First name: <input type="text" th:field="*{firstName}"/>
+        <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="error"></span>
+    </p>
     <br><br>
         <p>Last name (*):
             <input type="text" th:field="*{lastName}" />
             <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="error"></span>
         </p><br>
     <br><br>
+    <p>
+          age:   <input th:field="*{age}" type="text"/>
+        <span th:if="${#fields.hasErrors('age')}" th:errors="*{age}" class="error"></span>
+    </p>
+        <br>
+    <br>
     <select name="country"
             th:field="*{country}">
         <option th:each="tempCountry : ${countries}" th:value="${tempCountry}" th:text="${tempCountry}"></option>
