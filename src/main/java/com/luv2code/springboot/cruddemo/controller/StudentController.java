@@ -51,12 +51,14 @@ public class StudentController {
      */
    @PostMapping("/processStudentForm")
    public String studentForm(@Valid @ModelAttribute("student") Student student, BindingResult bindingResult, Model model) {
+       System.out.println(bindingResult.toString());
        if (bindingResult.hasErrors()) {
            return "student-form";
        }
        model.addAttribute("isim", student.getFirstName());
        model.addAttribute("soyisim", student.getLastName());
        model.addAttribute("yaş",student.getAge());
+       model.addAttribute("postalCode",student.getPostalCode());
        model.addAttribute("country", student.getCountry());
        model.addAttribute("language", student.getLanguage());
        model.addAttribute("operatingSystem", student.getOperatingSystem());
@@ -68,7 +70,6 @@ public class StudentController {
 
     @Value("${countries}")
     private List<String> country;
-
 
     @PostMapping("/showStudent")
     public String show(Model model) {
