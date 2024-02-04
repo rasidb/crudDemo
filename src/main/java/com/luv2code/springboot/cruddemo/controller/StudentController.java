@@ -62,7 +62,7 @@ public class StudentController {
        model.addAttribute("country", student.getCountry());
        model.addAttribute("language", student.getLanguage());
        model.addAttribute("operatingSystem", student.getOperatingSystem());
-
+    model.addAttribute("courseCode",student.getCourseCode());
        return "student";
    }
 

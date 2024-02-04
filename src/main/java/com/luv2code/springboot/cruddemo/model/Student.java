@@ -1,11 +1,15 @@
 package com.luv2code.springboot.cruddemo.model;
 
 
+import com.luv2code.springboot.cruddemo.validation.CourseCode;
 import jakarta.validation.constraints.*;
 
 import java.util.List;
 
 public class Student {
+    @CourseCode
+    private String courseCode;
+
     @Min(value = 1,message = "en düşük 1 olmalı")
     @Max(value = 30,message = "en yüksek 30 olmalı")
     @NotNull(message = "is required")
@@ -69,6 +73,14 @@ public class Student {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public String getCourseCode() {
+        return courseCode;
+    }
+
+    public void setCourseCode(String courseCode) {
+        this.courseCode = courseCode;
     }
 
     public String getLastName() {

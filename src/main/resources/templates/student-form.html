@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
+<html xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html" lang="EN">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>student form</title>
     <style>
 .error{color:red}
+
     </style>
 </head>
 <body>
@@ -13,42 +14,63 @@
 <br>
 <form
         th:action="@{/processStudentForm}" th:object="${student}" method="POST">
-    <p>First name: <input type="text" th:field="*{firstName}"/>
+    <p>First name: <label>
+        <input type="text" th:field="*{firstName}"/>
+    </label>
         <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="error"></span>
     </p>
-        <p>Last name (*):
-            <input type="text" th:field="*{lastName}" />
-            <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="error"></span>
-
+    <p>Last name (*):
+        <label>
+            <input type="text" th:field="*{lastName}"/>
+        </label>
+        <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="error"></span>
     <p>
-          age:   <input th:field="*{age}" type="text"/>
+    courseCode:
+    <label>
+        <input type="text" th:field="*{courseCode}">
+    </label>
+    <span th:if="${#fields.hasErrors('courseCode')}" th:errors="*{courseCode}" class="error"></span>
+
+    </p>
+    <p>
+        age: <label>
+        <input th:field="*{age}" type="text"/>
+    </label>
         <span th:if="${#fields.hasErrors('age')}" th:errors="*{age}" class="error"></span>
     </p>
 
-    <p >
-       postal code:  <input type="text" th:field="*{postalCode}">
+    <p>
+        postal code: <label>
+        <input type="text" th:field="*{postalCode}">
+    </label>
         <span th:if="${#fields.hasErrors('postalCode')}" th:errors="*{postalCode}" class="error"></span>
     </p>
 
-    <select name="country"
-            th:field="*{country}">
-        <option th:each="tempCountry : ${countries}" th:value="${tempCountry}" th:text="${tempCountry}"></option>
-    </select>
+    <label>
+        <select name="country"
+                th:field="*{country}">
+            <option th:each="tempCountry : ${countries}" th:value="${tempCountry}" th:text="${tempCountry}"></option>
+        </select>
+    </label>
 
     <p>Favorite Programming Language</p>
-    <input
-            type="radio"
-            th:field="*{language}"
-            th:each="language : ${languages}"
-            th:value="${language}"
-            th:text="${language}"/>
+    <label>
+        <input
+                type="radio"
+                th:field="*{language}"
+                th:each="language : ${languages}"
+                th:value="${language}"
+                th:text="${language}"/>
+    </label>
     <br>
     <p>Favorite operating System</p>
-    <input type="checkbox" th:field="*{operatingSystem}"
-           th:each="each : ${operatingSystems}"
-           th:value="${each}"
-           th:text="${each}"
-    />
+    <label>
+        <input type="checkbox" th:field="*{operatingSystem}"
+               th:each="each : ${operatingSystems}"
+               th:value="${each}"
+               th:text="${each}"
+        />
+    </label>
     <br>
     <input type="submit" name="submit" value="submit">
 </form>
