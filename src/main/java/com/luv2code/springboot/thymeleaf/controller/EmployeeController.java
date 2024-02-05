@@ -1,7 +1,6 @@
 package com.luv2code.springboot.thymeleaf.controller;
 
-import com.luv2code.springboot.thymeleaf.entity.Employee;
-import com.luv2code.springboot.thymeleaf.model.Student;
+import com.luv2code.springboot.thymeleaf.model.Employee;
 import com.luv2code.springboot.thymeleaf.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

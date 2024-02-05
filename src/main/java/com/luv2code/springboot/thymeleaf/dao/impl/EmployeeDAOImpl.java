@@ -1,8 +1,7 @@
 package com.luv2code.springboot.thymeleaf.dao.impl;
 
 import com.luv2code.springboot.thymeleaf.dao.EmployeeDAO;
-import com.luv2code.springboot.thymeleaf.entity.Employee;
-import com.luv2code.springboot.thymeleaf.model.Student;
+import com.luv2code.springboot.thymeleaf.model.Employee;
 import com.luv2code.springboot.thymeleaf.rest.exception.EmployeeBadRequestException;
 import com.luv2code.springboot.thymeleaf.rest.exception.EmployeeNotFoundException;
 import jakarta.persistence.EntityManager;

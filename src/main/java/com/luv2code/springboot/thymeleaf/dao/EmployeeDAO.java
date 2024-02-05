@@ -1,6 +1,6 @@
 package com.luv2code.springboot.thymeleaf.dao;
 
-import com.luv2code.springboot.thymeleaf.entity.Employee;
+import com.luv2code.springboot.thymeleaf.model.Employee;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;

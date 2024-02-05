@@ -1,6 +1,6 @@
 package com.luv2code.springboot.thymeleaf.rest;
 
-import com.luv2code.springboot.thymeleaf.entity.Employee;
+import com.luv2code.springboot.thymeleaf.model.Employee;
 import com.luv2code.springboot.thymeleaf.rest.exception.EmployeeNotFoundException;
 import com.luv2code.springboot.thymeleaf.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
