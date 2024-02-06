@@ -1,5 +1,6 @@
 package com.luv2code.springboot.thymeleaf.model;
 
+import com.luv2code.springboot.thymeleaf.validation.EmployeeMail;
 import jakarta.persistence.*;
 
 @Entity
@@ -18,6 +19,7 @@ public class Employee {
     private String lastName;
 
     @Column(name = "email")
+    @EmployeeMail
     private String email;
 
 

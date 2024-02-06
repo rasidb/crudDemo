@@ -2,9 +2,11 @@ package com.luv2code.springboot.thymeleaf.controller;
 
 import com.luv2code.springboot.thymeleaf.model.Employee;
 import com.luv2code.springboot.thymeleaf.service.EmployeeService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,21 +41,22 @@ public class EmployeeController {
     }
 
     @PostMapping("/save")
-    public String saveEmployee(@ModelAttribute("employee") Employee employee) {
+    public String saveEmployee(@ModelAttribute("employee")@Valid Employee employee, BindingResult bindingResult) {
+        if (bindingResult.hasErrors())
+            return "employees/employee-form";
         employeeService.save(employee);
         return "redirect:/employees/list";
     }
 
     @GetMapping("/showFormForUpdate")
-    public String update(@RequestParam("employeeId") String id, Model model) {
+    public String update( @RequestParam("employeeId") String id, Model model) {
         Employee employee = employeeService.findByID(id);
         model.addAttribute("employee", employee);
         return "employees/employee-form";
     }
     @GetMapping("/delete")
-    public String delete(@RequestParam("employeeId")String id){
+    public String delete( @RequestParam("employeeId")String id){
         employeeService.deleteById(id);
-        System.out.println(id);
         return "redirect:/employees/list";
     }
 
