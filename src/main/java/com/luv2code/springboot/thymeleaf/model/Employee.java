@@ -22,6 +22,9 @@ public class Employee {
     @EmployeeMail
     private String email;
 
+    @Column(name = "country")
+    private String country;
+
 
     public Employee() {
     }
@@ -31,6 +34,14 @@ public class Employee {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public int getId() {

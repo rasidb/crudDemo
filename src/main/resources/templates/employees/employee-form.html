@@ -26,6 +26,10 @@
         <input type="text" th:field="*{email}" placeholder="email" class="form-control mb-4 w-25">
         <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error"></span>
         <br>
+            <select th:field="*{country}" class="form-control mb-4 w-25">
+                <option th:each="each : ${countries}" th:text="${each}" th:value="${each}" ></option>
+            </select>
+        <br>
         <button type="submit" class="btn btn-info col-2">Save</button>
     </form>
     <hr>

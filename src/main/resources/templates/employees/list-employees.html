@@ -24,6 +24,7 @@
             <th>First Name</th>
             <th>Last Name</th>
             <th>Email</th>
+            <th>country</th>
             <th>Action</th>
         </tr>
         </thead>
@@ -34,10 +35,12 @@
             <td th:text="${each.firstName}"></td>
             <td th:text="${each.lastName}"></td>
             <td th:text="${each.email}"></td>
+            <td th:text="${each.country}"></td>
 
             <td>
-                <a th:href="@{/employees/showFormForUpdate(employeeId=${each.id})}" class="btn btn-info btn-sm">Update</a>
-                <a th:href="@{/employees/delete(employeeId=${each.id})}"  class="btn btn-danger btn-sm"
+                <a th:href="@{/employees/showFormForUpdate(employeeId=${each.id})}"
+                   class="btn btn-info btn-sm">Update</a>
+                <a th:href="@{/employees/delete(employeeId=${each.id})}" class="btn btn-danger btn-sm"
                    onclick="return confirm('Çalışan bilgilerini silmek istediğine emin misin?')">Delete</a>
             </td>
 
