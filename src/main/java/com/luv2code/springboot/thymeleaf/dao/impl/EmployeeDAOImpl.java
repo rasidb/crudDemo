@@ -52,7 +52,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     public void deleteById(int id) {
         Employee employee = entityManager.find(Employee.class, id);
         if (employee == null)
-            throw new EmployeeNotFoundException("student nor found" + id);
+            throw new EmployeeNotFoundException("student not found" + id);
         entityManager.remove(employee);
     }
 

@@ -53,7 +53,6 @@ public class EmployeeController {
 
     }
 
-
     @PostMapping("/save")
     public String saveEmployee(Model model, @ModelAttribute("employee") @Valid Employee employee, BindingResult bindingResult) {
         model.addAttribute("countries", countries);
@@ -75,9 +74,13 @@ public class EmployeeController {
     public String delete(@RequestParam("employeeId") String id) {
         employeeService.deleteById(id);
         return "redirect:/employees/list";
+
     }
-
-
+    @GetMapping("/showLoginPage")
+    public String loginPage(){
+        return "plain-login";
+    }
 }
+
 
 

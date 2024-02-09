@@ -48,18 +48,16 @@ public class EmployeeServiceImpl implements EmployeeService {
         int theID;
         try {
             theID = Integer.parseInt(id);
-            System.out.println("conver tamam");
         } catch (NumberFormatException e) {
-            System.out.println("hata");
             throw new EmployeeBadRequestException("bad request: " + id);
         }
 
         Employee employee = employeeDAO.findByID(theID);
-        System.out.println("employee buldu");
+        employeeDAO.deleteById(theID);
         if (employee == null)
             throw new EmployeeNotFoundException("employee not found");
-        System.out.println("employee sildi");
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
     }
 
     @Override
