@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Employee Directory</title>
@@ -8,17 +8,33 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css"
           integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu"
           crossorigin="anonymous">
+    <style>
+        p{
+        color:blue;
+        }
 
+    </style>
 </head>
 <body>
 <div class="container">
     <h3>Employee Directory</h3>
     <hr>
+    <div sec:authorize="hasRole('admin')">
+        <a th:href="@{/employees/admins}">Admin page</a>
+    </div>
+
     <div>
-        <a th:href="@{/employees/showFormForAdd}" class="btn btn-primary btn-sm mb-3">Add Employee</a>
-        <form action="#" th:action="@{/logout}" method="post" class="pull-right">
-            <input type="submit" value="logout" class="btn btn-danger btn-sm">
-        </form>
+        <div sec:authorize="hasAnyRole('admin', 'manager')">
+            <a th:href="@{/employees/showFormForAdd}" class="btn btn-primary btn-sm mb-3">Add Employee</a>
+        </div>
+        <div class="pull-right">
+            <p sec:authentication="principal.username"></p>
+            <p sec:authentication="principal.authorities"></p>
+            <form action="#" th:action="@{/logout}" method="post">
+                <input type="submit" value="logout" class="btn btn-danger btn-sm">
+            </form>
+        </div>
+
     </div>
 
     <table class="table table-bordered table-striped">
@@ -43,7 +59,7 @@
             <td>
                 <a th:href="@{/employees/showFormForUpdate(employeeId=${each.id})}"
                    class="btn btn-info btn-sm">Update</a>
-                <a th:href="@{/employees/delete(employeeId=${each.id})}" class="btn btn-danger btn-sm"
+                <a sec:authorize="hasRole('admin')" th:href="@{/employees/delete(employeeId=${each.id})}" class="btn btn-danger btn-sm"
                    onclick="return confirm('Are you sure you want to delete employee information?')">Delete</a>
             </td>
 

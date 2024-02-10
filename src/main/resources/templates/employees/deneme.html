@@ -5,29 +5,29 @@
     <title>Title</title>
 </head>
 <body>
-  <div >
+<div>
     <table>
-      <a href="list-employees.html" th:action="@{/showFormForAdd}">add employee</a>
-
-      <tr>
-        <th>Firstname</th>
-        <th>lastname</th>
-        <th>email</th>
-        <th>action</th>
-      </tr>
-      <tbody>
-      <tr th:each="each : ${employees}">
-        <td  th:text="${each.firstName}">
-        <td th:text="${each.lastName}">
-        <td th:text="${each.email}">
-        <td><a th:href="@{/employees/employee-form}" th:action="@{/showFormForUpdate}" th:field="employeeId={each.id}">düzenle</a>
-        <a th:href="{list-employees.html"th:action="@{/delete}">sil</a></td>
-      </td>
-      </tr>
-      </tbody>
+        <a href="list-employees.html" th:action="@{/showFormForAdd}">add employee</a>
+        <tr>
+            <th>Firstname</th>
+            <th>lastname</th>
+            <th>email</th>
+            <th>action</th>
+        </tr>
+        <tbody>
+        <tr th:each="each : ${employees}">
+            <td th:text="${each.firstName}">
+            <td th:text="${each.lastName}">
+            <td th:text="${each.email}">
+            <td>
+                <a th:href="@{/employees/employee-form}" th:action="@{/showFormForUpdate}"
+                   th:field="employeeId={each.id}">düzenle</a>
+                <a th:href="{list-employees.html" th:action="@{/delete}">sil</a>
+            </td>
+            </td>
+        </tr>
+        </tbody>
     </table>
-
-
-  </div>
+</div>
 </body>
 </html>

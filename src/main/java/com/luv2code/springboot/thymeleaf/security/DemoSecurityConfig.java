@@ -11,11 +11,12 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class DemoSecurityConfig {
+    String employeeRole = "employee";
+    String managerRole = "manager";
+    String adminRole = "admin";
     @Bean
     public InMemoryUserDetailsManager userDetailsManager() {
-        String employeeRole = "employee";
-        String managerRole = "manager";
-        String adminRole = "admin";
+
         UserDetails manager = User.builder()
                 .username(managerRole)
                 .password("{noop}" + managerRole)
@@ -37,14 +38,23 @@ public class DemoSecurityConfig {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(configurer ->
                         configurer
+                                .requestMatchers("/employees/").hasRole(employeeRole)
+                                .requestMatchers("/employees/managers/**").hasRole(managerRole)
+                                .requestMatchers("/employees/admins/**").hasRole(adminRole)
                                 .anyRequest().authenticated()   //tüm isteklerin kimlik doğrulaması gerektireceğini belirtir
                 )
+                .exceptionHandling(configurer -> configurer
+                        .accessDeniedPage("/employees/access-denied"))//yetkisiz istekte bu adrese yönlendir
+
                 .formLogin(form ->
                         form
                                 .loginPage("/employees/showLoginPage") //bu sayfayı açarak gerekli kimlik doğrulamasını başlatır
                                 .loginProcessingUrl("/authenticateTheUser") //kimlik doğrulamasının gerçekleşeceği url
                                 .permitAll())
-                .logout(LogoutConfigurer::permitAll);   //bu url'e gitmek için bi kimlik doğrulamasını geçmeye gerek yok
+                .logout(LogoutConfigurer::permitAll);//bu url'e gitmek için bi kimlik doğrulamasını geçmeye gerek yok
+
+
+
         return http.build();
     }
 }

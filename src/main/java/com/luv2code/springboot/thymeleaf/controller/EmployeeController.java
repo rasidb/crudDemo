@@ -6,12 +6,15 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -49,8 +52,6 @@ public class EmployeeController {
         model.addAttribute("countries", countries);
         model.addAttribute("employee", new Employee());
         return "employees/employee-form";
-
-
     }
 
     @PostMapping("/save")
@@ -80,6 +81,17 @@ public class EmployeeController {
     public String loginPage(){
         return "plain-login";
     }
+
+    @GetMapping("/admins")
+    public String admin(){
+        return "/employees/admin";
+    }
+
+    @GetMapping("/access-denied")
+    public String accessDenied(){
+        return "/employees/access-denied";
+    }
+
 }
 
 
