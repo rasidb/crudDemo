@@ -54,7 +54,6 @@
             <td th:text="${each.lastName}"></td>
             <td th:text="${each.email}"></td>
             <td th:text="${each.country}"></td>
-
             <td sec:authorize="hasAnyRole('manager', 'admin')">
                 <a th:href="@{/employees/showFormForUpdate(employeeId=${each.id})}"
                    class="btn btn-info btn-sm">Update</a>

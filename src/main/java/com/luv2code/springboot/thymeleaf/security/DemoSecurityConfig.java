@@ -4,36 +4,26 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+
+import javax.sql.DataSource;
+import java.sql.SQLException;
 
 @Configuration
 public class DemoSecurityConfig {
     String employeeRole = "employee";
     String managerRole = "manager";
     String adminRole = "admin";
+
     @Bean
-    public InMemoryUserDetailsManager userDetailsManager() {
-
-        UserDetails manager = User.builder()
-                .username(managerRole)
-                .password("{noop}" + managerRole)
-                .roles(managerRole, employeeRole).build();
-
-        UserDetails admin = User.builder()
-                .username(adminRole)
-                .password("{noop}" + adminRole)
-                .roles(adminRole, managerRole, employeeRole).build();
-
-        UserDetails employee = User.builder()
-                .username(employeeRole)
-                .password("{noop}" + employeeRole)
-                .roles(employeeRole).build();
-        return new InMemoryUserDetailsManager(manager, admin, employee);
+    public UserDetailsManager userDetailsManager(DataSource dataSource) throws SQLException {
+JdbcUserDetailsManager jdbcUserDetailsManager =new JdbcUserDetailsManager(dataSource);
+jdbcUserDetailsManager.setUsersByUsernameQuery("select username, password, enabled from users where username=? ");
+jdbcUserDetailsManager.setAuthoritiesByUsernameQuery("select username, authority from authorities where username=?");
+        return jdbcUserDetailsManager;
     }
-
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(configurer ->
@@ -53,8 +43,28 @@ public class DemoSecurityConfig {
                                 .permitAll())
                 .logout(LogoutConfigurer::permitAll);//bu url'e gitmek için bi kimlik doğrulamasını geçmeye gerek yok
 
-
-
         return http.build();
     }
+
+
+  /*  @Bean
+    public InMemoryUserDetailsManager userDetailsManager() {
+
+        UserDetails manager = User.builder()
+                .username(managerRole)
+                .password("{noop}" + managerRole)
+                .roles(managerRole, employeeRole).build();
+
+        UserDetails admin = User.builder()
+                .username(adminRole)
+                .password("{noop}" + adminRole)
+                .roles(adminRole, managerRole, employeeRole).build();
+
+        UserDetails employee = User.builder()
+                .username(employeeRole)
+                .password("{noop}" + employeeRole)
+                .roles(employeeRole).build();
+        return new InMemoryUserDetailsManager(manager, admin, employee);
+    }*/
+
 }
