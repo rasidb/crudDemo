@@ -6,15 +6,11 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-
-import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -27,7 +23,7 @@ public class EmployeeController {
         webDataBinder.registerCustomEditor(String.class, stringTrimmerEditor); //stringTrimmerEditor sayesinde inputta bulunan boşlukları siliyoruz
     }
 
-    @Value("${countries}")
+    @Value("${countries}") //application.properties dosyasındaki countries
     private List<String> countries;
 
     @Autowired
@@ -57,8 +53,7 @@ public class EmployeeController {
     @PostMapping("/save")
     public String saveEmployee(Model model, @ModelAttribute("employee") @Valid Employee employee, BindingResult bindingResult) {
         model.addAttribute("countries", countries);
-        if (bindingResult.hasErrors())
-            return "employees/employee-form";
+        if (bindingResult.hasErrors()) return "employees/employee-form";
         employeeService.save(employee);
         return "redirect:/employees/list";
     }
@@ -77,22 +72,20 @@ public class EmployeeController {
         return "redirect:/employees/list";
 
     }
+
     @GetMapping("/showLoginPage")
-    public String loginPage(){
+    public String loginPage() {
         return "plain-login";
     }
 
     @GetMapping("/admins")
-    public String admin(){
+    public String admin() {
         return "/employees/admin";
     }
 
     @GetMapping("/access-denied")
-    public String accessDenied(){
+    public String accessDenied() {
         return "/employees/access-denied";
     }
 
 }
-
-
-

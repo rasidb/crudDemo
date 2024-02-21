@@ -1,5 +1,6 @@
 package com.luv2code.springboot.thymeleaf.validation;
 
+import com.luv2code.springboot.thymeleaf.validation.validator.EmployeeMailContraintValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
@@ -23,8 +24,6 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 public @interface EmployeeMail { //Bu anotasyon, özel doğrulama kurallarını tanımlayan bir arayüz oluşturur.
-
-
     //define default email
     public String value() default "@gmail.com"; //varsayılan olarak belirlenmiş bir mail tanımlar. Bu değer, anotasyon kullanıcıları tarafından belirtilmezse kullanılacaktır.
 
@@ -36,7 +35,6 @@ public @interface EmployeeMail { //Bu anotasyon, özel doğrulama kurallarını 
 
     //define default payloads
     public Class<? extends Payload>[] payload() default {};//varsayılan olarak belirlenmiş payload'ları tanımlar. Payload'lar, doğrulama kuralının nasıl uygulanacağını belirleyen ek bilgiler içerebilir.
-
 
 
 }

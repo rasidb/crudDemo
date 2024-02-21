@@ -1,5 +1,6 @@
-package com.luv2code.springboot.thymeleaf.validation;
+package com.luv2code.springboot.thymeleaf.validation.validator;
 
+import com.luv2code.springboot.thymeleaf.validation.EmployeeMail;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
